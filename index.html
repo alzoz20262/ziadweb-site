@@ -23,7 +23,7 @@
     .splash-screen {  
         position: fixed; inset: 0; z-index: 9999; display: flex; align-items: center; justify-content: center;  
         background: radial-gradient(circle at center, rgba(236,72,153,.16), transparent 45%), var(--bg);  
-        transition: .7s;  
+        transition: opacity .7s ease, visibility .7s ease;  
     }  
     .splash-screen.hide { opacity: 0; visibility: hidden; pointer-events: none; }  
     .brand-logo { color: white; font-size: clamp(4.5rem,15vw,9rem); font-weight: 900; letter-spacing: -.08em; text-shadow: 0 0 25px rgba(236,72,153,.25); }  
@@ -69,10 +69,10 @@
     .copy-btn { padding: 10px 14px; color: white; background: var(--pink); border-radius: 8px; font-weight: 700; }  
 
     .modal { position: fixed; inset: 0; z-index: 10000; display: flex; align-items: center; justify-content: center; padding: 20px; }  
-    .modal[hidden] { display: none; }  
+    .modal[hidden] { display: none !important; }  
     .modal-overlay { position: absolute; inset: 0; background: rgba(0,0,0,.75); backdrop-filter: blur(8px); }  
     .login-card { width: min(380px,100%); position: relative; z-index: 1; padding: 30px; text-align: center; background: #121219; border: 1px solid var(--border); border-radius: 20px; }  
-    .close-button { position: absolute; top: 12px; right: 15px; color: var(--muted); background: transparent; font-size: 1.5rem; }  
+    .close-button { position: absolute; top: 12px; right: 15px; color: var(--muted); background: transparent; font-size: 1.5rem; cursor: pointer; }  
     .auth-form { display: flex; flex-direction: column; gap: 12px; margin-top: 20px; }  
     .auth-input { width: 100%; padding: 12px; color: white; background: #1a1a24; border: 1px solid var(--border); border-radius: 8px; outline: none; }  
     .auth-submit, .google-login-button { width: 100%; padding: 12px; border-radius: 8px; font-weight: 700; }  
@@ -146,37 +146,39 @@
 </div>  
 
 <script>
-    // إخفاء الشاشة فور تحميل الصفحة وضمان عدم التعليق
-    setTimeout(() => {
-        const splash = document.getElementById('splash-screen');
-        if (splash) splash.classList.add('hide');
-    }, 2000);
+    // تفعيل إخفاء الشاشة الفوري بمجرد تحميل الصفحة
+    window.addEventListener('load', () => {
+        setTimeout(() => {
+            const splash = document.getElementById('splash-screen');
+            if (splash) splash.classList.add('hide');
+        }, 2000);
+    });
 
-    window.addEventListener('DOMContentLoaded', () => {
-        let currentUser = null;
-        let selectedFiles = [];
+    let currentUser = null;
+    let selectedFiles = [];
 
-        const folderInput = document.getElementById('folder-input');
-        const fileInput = document.getElementById('file-input');
-        const btnFolder = document.getElementById('btn-browse-folder');
-        const btnFiles = document.getElementById('btn-browse-files');
-        const projectPreview = document.getElementById('project-preview');
-        const projectName = document.getElementById('project-name');
-        const deployBtn = document.getElementById('deploy-button');
-        const deployResult = document.getElementById('deploy-result');
-        const deployedUrl = document.getElementById('deployed-url');
-        const copyBtn = document.getElementById('copy-btn');
+    const folderInput = document.getElementById('folder-input');
+    const fileInput = document.getElementById('file-input');
+    const btnFolder = document.getElementById('btn-browse-folder');
+    const btnFiles = document.getElementById('btn-browse-files');
+    const projectPreview = document.getElementById('project-preview');
+    const projectName = document.getElementById('project-name');
+    const deployBtn = document.getElementById('deploy-button');
+    const deployResult = document.getElementById('deploy-result');
+    const deployedUrl = document.getElementById('deployed-url');
+    const copyBtn = document.getElementById('copy-btn');
 
-        const loginBtn = document.getElementById('login-button');
-        const authModal = document.getElementById('auth-modal');
-        const closeModal = document.getElementById('close-modal');
-        const modalOverlay = document.getElementById('modal-overlay');
-        const loginForm = document.getElementById('login-form');
-        const emailInput = document.getElementById('email-input');
-        const userDisplay = document.getElementById('user-display');
-        const googleBtn = document.getElementById('google-btn');
+    const loginBtn = document.getElementById('login-button');
+    const authModal = document.getElementById('auth-modal');
+    const closeModal = document.getElementById('close-modal');
+    const modalOverlay = document.getElementById('modal-overlay');
+    const loginForm = document.getElementById('login-form');
+    const emailInput = document.getElementById('email-input');
+    const userDisplay = document.getElementById('user-display');
+    const googleBtn = document.getElementById('google-btn');
 
-        btnFolder.addEventListener('click', () => folderInput.click());
-        btnFiles.addEventListener('click', () => fileInput.click());
+    btnFolder.addEventListener('click', () => folderInput.click());
+    btnFiles.addEventListener('click', () => fileInput.click());
 
-        folderInput.addEventListener('change', (e) => {
+    folderInput.addEventListener('change', (e) => {
+        if (e.target.
