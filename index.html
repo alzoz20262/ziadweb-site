@@ -66,7 +66,7 @@
     .success-message { color: #86efac; font-weight: 800; margin-bottom: 12px; }  
     .url-box { display: flex; gap: 8px; }  
     .url-input { flex: 1; min-width: 0; padding: 10px; color: var(--pink); background: #181824; border: 1px solid var(--border); border-radius: 8px; outline: none; }  
-    .copy-btn { padding: 10px 14px; color: white; background: var(--pink); border-radius: 8px; font-weight: 700; }  
+    .copy-btn, .open-btn { padding: 10px 14px; color: white; background: var(--pink); border-radius: 8px; font-weight: 700; text-decoration: none; display: inline-flex; align-items: center; }  
 
     .modal { position: fixed; inset: 0; z-index: 10000; display: flex; align-items: center; justify-content: center; padding: 20px; }  
     .modal[hidden] { display: none !important; }  
@@ -126,6 +126,7 @@
             <div class="url-box">  
                 <input type="text" id="deployed-url" class="url-input" readonly>  
                 <button id="copy-btn" class="copy-btn">Copy</button>  
+                <a id="open-link" class="open-btn" href="#" target="_blank">Open</a>  
             </div>  
         </section>  
     </section>  
@@ -146,7 +147,6 @@
 </div>  
 
 <script>
-    // تفعيل إخفاء الشاشة الفوري بمجرد تحميل الصفحة
     window.addEventListener('load', () => {
         setTimeout(() => {
             const splash = document.getElementById('splash-screen');
@@ -167,6 +167,7 @@
     const deployResult = document.getElementById('deploy-result');
     const deployedUrl = document.getElementById('deployed-url');
     const copyBtn = document.getElementById('copy-btn');
+    const openLink = document.getElementById('open-link');
 
     const loginBtn = document.getElementById('login-button');
     const authModal = document.getElementById('auth-modal');
@@ -249,10 +250,11 @@
             deployBtn.textContent = 'Deploy';
             deployBtn.disabled = false;
             
-            const siteName = (projectName.textContent.split(':')[1] || 'project').trim().toLowerCase().replace(/[^a-z0-9]/g, '');
-            const generatedLink = `https://${siteName || 'site'}-${Math.floor(1000 + Math.random() * 9000)}.vercel.app`;
+            // استخدام رابط Vercel الحقيقي الخاص بك لتفادي مشكلة 404
+            const realLink = "https://ziadweb-site.vercel.app/";
             
-            deployedUrl.value = generatedLink;
+            deployedUrl.value = realLink;
+            openLink.href = realLink;
             deployResult.style.display = 'block';
         }, 2000);
     });
