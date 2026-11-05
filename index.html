@@ -181,4 +181,89 @@
     btnFiles.addEventListener('click', () => fileInput.click());
 
     folderInput.addEventListener('change', (e) => {
-        if (e.target.
+        if (e.target.files.length > 0) {
+            selectedFiles = e.target.files;
+            const folderName = selectedFiles[0].webkitRelativePath.split('/')[0] || 'Selected Folder';
+            projectName.textContent = `Folder: ${folderName} (${selectedFiles.length} files)`;
+            projectPreview.style.display = 'flex';
+            deployResult.style.display = 'none';
+        }
+    });
+
+    fileInput.addEventListener('change', (e) => {
+        if (e.target.files.length > 0) {
+            selectedFiles = e.target.files;
+            projectName.textContent = selectedFiles.length === 1 ? selectedFiles[0].name : `${selectedFiles.length} files selected`;
+            projectPreview.style.display = 'flex';
+            deployResult.style.display = 'none';
+        }
+    });
+
+    const openAuth = () => authModal.removeAttribute('hidden');
+    const closeAuth = () => authModal.setAttribute('hidden', 'true');
+
+    loginBtn.addEventListener('click', () => {
+        if (currentUser) {
+            currentUser = null;
+            userDisplay.textContent = '';
+            loginBtn.textContent = 'Sign in';
+        } else {
+            openAuth();
+        }
+    });
+
+    closeModal.addEventListener('click', closeAuth);
+    modalOverlay.addEventListener('click', closeAuth);
+
+    loginForm.addEventListener('submit', (e) => {
+        e.preventDefault();
+        currentUser = emailInput.value;
+        userDisplay.textContent = currentUser;
+        loginBtn.textContent = 'Sign out';
+        closeAuth();
+    });
+
+    googleBtn.addEventListener('click', () => {
+        currentUser = "ziad@gmail.com";
+        userDisplay.textContent = currentUser;
+        loginBtn.textContent = 'Sign out';
+        closeAuth();
+    });
+
+    deployBtn.addEventListener('click', () => {
+        if (!currentUser) {
+            alert('يجب عليك تسجيل الدخول أولاً لتتمكن من النشر!');
+            openAuth();
+            return;
+        }
+
+        if (selectedFiles.length === 0) {
+            alert('الرجاء اختيار ملفات أو مجلد أولاً!');
+            return;
+        }
+
+        deployBtn.textContent = 'Deploying...';
+        deployBtn.disabled = true;
+
+        setTimeout(() => {
+            deployBtn.textContent = 'Deploy';
+            deployBtn.disabled = false;
+            
+            const siteName = (projectName.textContent.split(':')[1] || 'project').trim().toLowerCase().replace(/[^a-z0-9]/g, '');
+            const generatedLink = `https://${siteName || 'site'}-${Math.floor(1000 + Math.random() * 9000)}.vercel.app`;
+            
+            deployedUrl.value = generatedLink;
+            deployResult.style.display = 'block';
+        }, 2000);
+    });
+
+    copyBtn.addEventListener('click', () => {
+        deployedUrl.select();
+        navigator.clipboard.writeText(deployedUrl.value);
+        copyBtn.textContent = 'Copied!';
+        setTimeout(() => copyBtn.textContent = 'Copy', 2000);
+    });
+</script>
+
+</body>  
+</html>
