@@ -68,7 +68,6 @@
     .url-input { flex: 1; min-width: 0; padding: 10px; color: var(--pink); background: #181824; border: 1px solid var(--border); border-radius: 8px; outline: none; }  
     .copy-btn { padding: 10px 14px; color: white; background: var(--pink); border-radius: 8px; font-weight: 700; }  
 
-    /* Modal Sign In */  
     .modal { position: fixed; inset: 0; z-index: 10000; display: flex; align-items: center; justify-content: center; padding: 20px; }  
     .modal[hidden] { display: none; }  
     .modal-overlay { position: absolute; inset: 0; background: rgba(0,0,0,.75); backdrop-filter: blur(8px); }  
@@ -105,7 +104,6 @@
             <p>Upload your project and deploy it.</p>  
         </div>  
 
-        <!-- المدخلات المخفية للمجلد والملفات -->
         <input type="file" id="folder-input" webkitdirectory directory style="display: none;">  
         <input type="file" id="file-input" multiple style="display: none;">  
 
@@ -123,7 +121,6 @@
             <button id="deploy-button" class="deploy-button">Deploy</button>  
         </section>  
 
-        <!-- النتيجة ورابط الموقع -->
         <section id="deploy-result" class="deploy-result" style="display: none;">  
             <p class="success-message">✓ Project Deployed Successfully!</p>  
             <div class="url-box">  
@@ -134,7 +131,6 @@
     </section>  
 </main>  
 
-<!-- نافذة تسجيل الدخول -->
 <div id="auth-modal" class="modal" hidden>  
     <div class="modal-overlay" id="modal-overlay"></div>  
     <div class="login-card">  
@@ -150,18 +146,16 @@
 </div>  
 
 <script>
-    window.addEventListener('DOMContentLoaded', () => {
-        // إخفاء الشاشة الترحيبية
-        setTimeout(() => {
-            const splash = document.getElementById('splash-screen');
-            if (splash) splash.classList.add('hide');
-        }, 2000);
+    // إخفاء الشاشة فور تحميل الصفحة وضمان عدم التعليق
+    setTimeout(() => {
+        const splash = document.getElementById('splash-screen');
+        if (splash) splash.classList.add('hide');
+    }, 2000);
 
-        // متغير الحالة
+    window.addEventListener('DOMContentLoaded', () => {
         let currentUser = null;
         let selectedFiles = [];
 
-        // العناصر
         const folderInput = document.getElementById('folder-input');
         const fileInput = document.getElementById('file-input');
         const btnFolder = document.getElementById('btn-browse-folder');
@@ -182,4 +176,7 @@
         const userDisplay = document.getElementById('user-display');
         const googleBtn = document.getElementById('google-btn');
 
-        // فتح خيا
+        btnFolder.addEventListener('click', () => folderInput.click());
+        btnFiles.addEventListener('click', () => fileInput.click());
+
+        folderInput.addEventListener('change', (e) => {
