@@ -1,8 +1,9 @@
-
-<!DOCTYPE html>  <html lang="en">  
+<!DOCTYPE html>  
+<html lang="en">  
 <head>  
     <meta charset="UTF-8">  
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">  <title>_ Z Platform</title>  
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">  
+    <title>_ Z Platform</title>  
 
 <style>  
     :root {  
@@ -361,56 +362,72 @@
     }  
 </style>
 
-</head>  <body>  <section id="splash-screen" class="splash-screen">  
+</head>  
+<body>  
+
+<section id="splash-screen" class="splash-screen">  
     <div>  
         <div class="brand-logo">_ Z</div>  
         <p class="splash-text">Built by Ziad. Powered by Firebase.</p>  
     </div>  
-</section>  <main class="main-screen">  <header class="top-bar">  
-    <span class="small-logo">_ Z</span>  
+</section>  
 
-    <div class="user-status">  
-        <span id="user-display" class="user-email"></span>  
-        <button id="login-button" class="login-button">  
-            Sign in  
-        </button>  
-    </div>  
-</header>  
+<main class="main-screen">  
+    <header class="top-bar">  
+        <span class="small-logo">_ Z</span>  
 
-<section class="main-content">  
+        <div class="user-status">  
+            <span id="user-display" class="user-email"></span>  
+            <button id="login-button" class="login-button">  
+                Sign in  
+            </button>  
+        </div>  
+    </header>  
 
-    <div class="welcome-section">  
-        <h1>Ready when you are, Ziad.</h1>  
-        <p>Upload your project and deploy it.</p>  
-    </div>  
+    <section class="main-content">  
 
-    <div id="upload-area" class="upload-area">  
-        <span class="upload-text-main">  
-            Browse files to upload  
-        </span>  
+        <div class="welcome-section">  
+            <h1>Ready when you are, Ziad.</h1>  
+            <p>Upload your project and deploy it.</p>  
+        </div>  
 
-        <span class="upload-text-or">or</span>  
-
-        <span class="upload-text-main">  
-            choose multiple files  
-        </span>  
-    </div>  
-
-    <section id="project-preview" class="project-preview" hidden>  
-
-        <div class="project-info">  
-            <span class="project-label">  
-                SELECTED PROJECT  
+        <div id="upload-area" class="upload-area">  
+            <span class="upload-text-main">  
+                Browse files to upload  
             </span>  
 
-            <span id="project-name" class="project-name">  
-                No files selected  
+            <span class="upload-text-or">or</span>  
+
+            <span class="upload-text-main">  
+                choose multiple files  
             </span>  
         </div>  
 
-        <button id="deploy-button" class="deploy-button">
+        <section id="project-preview" class="project-preview" hidden>  
+
+            <div class="project-info">  
+                <span class="project-label">  
+                    SELECTED PROJECT  
+                </span>  
+
+                <span id="project-name" class="project-name">  
+                    No files selected  
+                </span>  
+            </div>  
+
+            <button id="deploy-button" class="deploy-button">Deploy</button>
+        </section>  
+    </section>  
+</main>  
+
 <script>
-  setTimeout(function() {
-    window.location.href = "home.html"; // اكتب هنا اسم ملف الصفحة التالية
-  }, 2000); // الانتقال بعد ثانيتين
+  window.addEventListener('DOMContentLoaded', () => {
+    setTimeout(() => {
+      const splash = document.getElementById('splash-screen');
+      if (splash) splash.classList.add('hide');
+    }, 2000);
+  });
 </script>
+
+</body>  
+</html>
